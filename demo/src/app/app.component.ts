@@ -53,7 +53,7 @@ import { ThemeToggleComponent } from './theme-toggle.component';
           <app-theme-toggle />
           <a
             class="btn btn-ghost btn-icon"
-            href="https://github.com/alapaque/angular-auth"
+            href="https://github.com/ALapaque/angular-auth"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Repository on GitHub"
@@ -84,7 +84,7 @@ import { ThemeToggleComponent } from './theme-toggle.component';
           <span>&#64;amaurylapaque/angular-auth · MIT</span>
         </div>
         <nav class="footer-links" aria-label="Footer">
-          <a href="https://github.com/alapaque/angular-auth" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="https://github.com/ALapaque/angular-auth" target="_blank" rel="noopener noreferrer">GitHub</a>
           <a href="https://www.npmjs.com/package/@amaurylapaque/angular-auth" target="_blank" rel="noopener noreferrer">npm</a>
           <a routerLink="/docs">Docs</a>
           <a routerLink="/docs/security">Security</a>

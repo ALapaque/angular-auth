@@ -68,7 +68,7 @@ interface DocsGroup {
 
           <a
             class="docs-nav-github"
-            href="https://github.com/alapaque/angular-auth"
+            href="https://github.com/ALapaque/angular-auth"
             target="_blank"
             rel="noopener noreferrer"
           >
