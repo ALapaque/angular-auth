@@ -1,6 +1,6 @@
 {
   "name": "@amaurylapaque/angular-auth",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Pluggable Angular authentication layer with adapters for OIDC, MSAL, Firebase, Supabase, JWT and Mock providers.",
   "license": "MIT",
   "private": false,
