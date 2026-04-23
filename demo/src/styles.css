@@ -613,10 +613,11 @@ button.btn {
 .prose li > p { margin: 0; }
 .prose a { color: var(--accent); text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent); }
 .prose a:hover { text-decoration-color: var(--accent); }
-.prose p, .prose li { overflow-wrap: anywhere; }
-.prose :not(pre) > code, .prose a { word-break: break-word; }
+.prose p, .prose li { overflow-wrap: break-word; }
+.prose a { overflow-wrap: anywhere; }
 .prose table {
   display: block;
+  width: 100%;
   max-width: 100%;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
@@ -625,7 +626,15 @@ button.btn {
   border-radius: var(--r-sm);
 }
 .prose table th,
-.prose table td { border-bottom: var(--border-w) solid var(--border); }
+.prose table td {
+  border-bottom: var(--border-w) solid var(--border);
+  white-space: nowrap;
+  vertical-align: top;
+}
+.prose table td:last-child {
+  white-space: normal;
+  min-width: 22ch;
+}
 .prose table th:first-child,
 .prose table td:first-child { padding-left: var(--sp-4); }
 .prose table th:last-child,
