@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 
 import { CodeBlockComponent } from '../code-block.component';
+import { PackageInstallComponent } from '../package-install.component';
 
 @Component({
   selector: 'app-docs-firebase',
   standalone: true,
-  imports: [CodeBlockComponent],
+  imports: [CodeBlockComponent, PackageInstallComponent],
   template: `
     <h1>Firebase adapter</h1>
     <p class="lede">
@@ -14,7 +15,7 @@ import { CodeBlockComponent } from '../code-block.component';
     </p>
 
     <h2>Install</h2>
-    <app-code [code]="install" lang="bash" />
+    <app-package-install [groups]="installGroups" />
 
     <h2>Bootstrap</h2>
     <app-code [code]="bootstrap" />
@@ -61,7 +62,9 @@ import { CodeBlockComponent } from '../code-block.component';
   ],
 })
 export class DocsFirebaseComponent {
-  readonly install = 'npm install firebase';
+  readonly installGroups = [
+    { packages: 'firebase' },
+  ] as const;
 
   readonly bootstrap = `import { GoogleAuthProvider } from 'firebase/auth';
 import { provideAuth, provideFirebase } from '@amaurylapaque/angular-auth';

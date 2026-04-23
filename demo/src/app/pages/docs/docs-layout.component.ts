@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { DOCUMENT, Component, HostListener, effect, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { filter } from 'rxjs';
 
 interface DocsChild {
   readonly fragment: string;
@@ -24,8 +26,40 @@ interface DocsGroup {
   standalone: true,
   imports: [RouterLink, RouterLinkActive, RouterOutlet],
   template: `
-    <div class="container docs-shell">
-      <aside class="docs-nav" aria-label="Documentation">
+    <div class="container docs-shell" [class.is-mobile-open]="mobileOpen()">
+      <button
+        type="button"
+        class="docs-mobile-toggle"
+        (click)="toggleMobile()"
+        [attr.aria-expanded]="mobileOpen()"
+        aria-controls="docs-nav"
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+        <span>Docs menu</span>
+      </button>
+
+      <div class="docs-backdrop" (click)="closeMobile()" aria-hidden="true"></div>
+
+      <aside id="docs-nav" class="docs-nav" aria-label="Documentation">
+        <div class="docs-nav-head">
+          <span class="docs-nav-head-label">Documentation</span>
+          <button
+            type="button"
+            class="docs-nav-close"
+            (click)="closeMobile()"
+            aria-label="Close documentation menu"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+
         <div class="docs-nav-inner">
           @for (group of groups; track group.title) {
             <section class="docs-group">
@@ -101,12 +135,51 @@ interface DocsGroup {
         align-items: start;
       }
 
-      @media (max-width: 900px) {
-        .docs-shell {
-          grid-template-columns: 1fr;
-          gap: var(--sp-8);
-        }
+      /* ============ MOBILE TOGGLE ============ */
+      .docs-mobile-toggle {
+        display: none;
+        align-items: center;
+        gap: var(--sp-2);
+        padding: var(--sp-3) var(--sp-4);
+        font-family: var(--font-mono);
+        font-size: var(--fs-xs);
+        text-transform: uppercase;
+        letter-spacing: var(--tracking-wide);
+        color: var(--text);
+        background: var(--surface);
+        border: var(--border-w-strong) solid var(--border);
+        border-radius: var(--r-sm);
+        cursor: pointer;
+        transition:
+          color var(--dur-fast) var(--ease-out),
+          border-color var(--dur-fast) var(--ease-out),
+          background var(--dur-fast) var(--ease-out);
       }
+      .docs-mobile-toggle:hover {
+        border-color: var(--border-strong);
+        background: var(--surface-2);
+      }
+      .docs-mobile-toggle:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 2px var(--accent);
+      }
+
+      /* ============ BACKDROP ============ */
+      .docs-backdrop {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(2px);
+        -webkit-backdrop-filter: blur(2px);
+        z-index: 49;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity var(--dur-base) var(--ease-out);
+      }
+
+      /* ============ NAV HEAD (mobile only) ============ */
+      .docs-nav-head { display: none; }
 
       /* ============ SIDEBAR ============ */
       .docs-nav {
@@ -115,13 +188,6 @@ interface DocsGroup {
         max-height: calc(100vh - var(--nav-h) - var(--sp-10));
         overflow-y: auto;
         padding-right: var(--sp-2);
-      }
-      @media (max-width: 900px) {
-        .docs-nav {
-          position: static;
-          max-height: none;
-          overflow: visible;
-        }
       }
 
       .docs-nav-inner {
@@ -156,7 +222,7 @@ interface DocsGroup {
         align-items: center;
         gap: var(--sp-2);
         padding: var(--sp-2) var(--sp-3);
-        margin-left: -1px; /* overlap the border so active bar is flush */
+        margin-left: -1px;
         font-size: var(--fs-sm);
         color: var(--text-muted);
         text-decoration: none;
@@ -262,10 +328,127 @@ interface DocsGroup {
       .docs-content { min-width: 0; }
       .docs-content .prose { max-width: none; }
       .docs-content .prose > :first-child { margin-top: 0; }
+
+      /* ============ MOBILE LAYOUT (<= 900px) ============ */
+      @media (max-width: 900px) {
+        .docs-shell {
+          grid-template-columns: minmax(0, 1fr);
+          gap: var(--sp-5);
+          padding-top: clamp(var(--sp-5), 4vw, var(--sp-8));
+        }
+
+        .docs-mobile-toggle { display: inline-flex; justify-self: start; }
+        .docs-backdrop { display: block; }
+
+        .docs-nav {
+          position: fixed;
+          inset: 0 auto 0 0;
+          top: 0;
+          width: min(86vw, 340px);
+          max-height: none;
+          padding: var(--sp-5) var(--sp-5) var(--sp-8);
+          background: var(--bg);
+          border-right: var(--border-w) solid var(--border);
+          box-shadow: 0 20px 60px -20px rgba(0, 0, 0, 0.45);
+          z-index: 50;
+          transform: translateX(-100%);
+          transition: transform var(--dur-base) var(--ease-out);
+          overflow-y: auto;
+          overscroll-behavior: contain;
+        }
+
+        .docs-nav-head {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: var(--sp-3);
+          padding-bottom: var(--sp-4);
+          margin-bottom: var(--sp-5);
+          border-bottom: var(--border-w) solid var(--border);
+          position: sticky;
+          top: 0;
+          background: var(--bg);
+          z-index: 1;
+        }
+        .docs-nav-head-label {
+          font-family: var(--font-mono);
+          font-size: var(--fs-xs);
+          text-transform: uppercase;
+          letter-spacing: var(--tracking-wide);
+          color: var(--text-muted);
+        }
+        .docs-nav-close {
+          display: inline-grid;
+          place-items: center;
+          width: 32px;
+          height: 32px;
+          color: var(--text);
+          background: transparent;
+          border: var(--border-w) solid var(--border);
+          border-radius: var(--r-sm);
+          cursor: pointer;
+          transition:
+            color var(--dur-fast) var(--ease-out),
+            border-color var(--dur-fast) var(--ease-out),
+            background var(--dur-fast) var(--ease-out);
+        }
+        .docs-nav-close:hover {
+          background: var(--surface-2);
+          border-color: var(--border-strong);
+        }
+        .docs-nav-close:focus-visible {
+          outline: none;
+          box-shadow: 0 0 0 2px var(--accent);
+        }
+
+        .is-mobile-open .docs-nav { transform: translateX(0); }
+        .is-mobile-open .docs-backdrop {
+          opacity: 1;
+          pointer-events: auto;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .docs-nav,
+        .docs-backdrop { transition: none; }
+      }
     `,
   ],
 })
 export class DocsLayoutComponent {
+  private readonly router = inject(Router);
+  private readonly doc = inject(DOCUMENT);
+
+  readonly mobileOpen = signal(false);
+
+  constructor() {
+    this.router.events
+      .pipe(
+        filter((e): e is NavigationEnd => e instanceof NavigationEnd),
+        takeUntilDestroyed(),
+      )
+      .subscribe(() => this.mobileOpen.set(false));
+
+    effect(() => {
+      const body = this.doc.body;
+      if (!body) return;
+      body.style.overflow = this.mobileOpen() ? 'hidden' : '';
+    });
+  }
+
+  toggleMobile(): void {
+    this.mobileOpen.update((v) => !v);
+  }
+
+  closeMobile(): void {
+    this.mobileOpen.set(false);
+  }
+
+  @HostListener('document:keydown.escape')
+  onEscape(): void {
+    if (this.mobileOpen()) this.closeMobile();
+  }
+
   readonly groups: readonly DocsGroup[] = [
     {
       kicker: '01',

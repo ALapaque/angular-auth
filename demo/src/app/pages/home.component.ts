@@ -2,10 +2,12 @@ import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '@amaurylapaque/angular-auth';
 
+import { PackageInstallComponent } from './docs/package-install.component';
+
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, PackageInstallComponent],
   template: `
     <!-- ============ HERO ============ -->
     <section class="hero dotgrid" aria-labelledby="hero-title">
@@ -41,9 +43,8 @@ import { AuthService } from '@amaurylapaque/angular-auth';
           <a class="btn" routerLink="/docs">Read the docs</a>
         </div>
 
-        <div class="hero-install" role="group" aria-label="Install command">
-          <span class="hero-install-prompt" aria-hidden="true">$</span>
-          <code>npm i @amaurylapaque/angular-auth</code>
+        <div class="hero-install">
+          <app-package-install [groups]="installGroups" />
           <span class="badge badge-soft">MIT · SSR-safe</span>
         </div>
 
@@ -289,24 +290,24 @@ bootstrapApplication(AppComponent, &#123;
       .hero-actions { margin-top: var(--sp-4); }
 
       .hero-install {
-        display: inline-flex;
-        align-items: center;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
         gap: var(--sp-3);
-        flex-wrap: wrap;
-        padding: var(--sp-3) var(--sp-4);
-        background: var(--surface);
-        border: var(--border-w-strong) solid var(--border);
-        border-radius: var(--r-md);
-        font-family: var(--font-mono);
-        font-size: var(--fs-sm);
-        width: fit-content;
+        width: 100%;
+        max-width: 560px;
       }
-      .hero-install-prompt { color: var(--accent); font-weight: 600; }
-      .hero-install code {
-        padding: 0;
-        background: transparent;
-        border: none;
-        color: var(--text);
+      .hero-install app-package-install {
+        display: block;
+        width: 100%;
+        margin: 0;
+      }
+
+      @media (max-width: 560px) {
+        .hero { padding-block: clamp(3rem, 8vw, 5rem) clamp(2.5rem, 6vw, 4rem); }
+        .hero-inner { gap: var(--sp-5); }
+        .hero-actions .btn { flex: 1 1 auto; }
+        .hero-chips { gap: var(--sp-3); }
       }
 
       .hero-chips {
@@ -347,13 +348,14 @@ bootstrapApplication(AppComponent, &#123;
       /* ============ BENTO ============ */
       .bento {
         display: grid;
-        grid-template-columns: repeat(6, 1fr);
+        grid-template-columns: repeat(6, minmax(0, 1fr));
         gap: var(--sp-5);
       }
       .bento-tile {
         display: flex;
         flex-direction: column;
         gap: var(--sp-3);
+        min-width: 0;
       }
       .bento-tile h3 { letter-spacing: var(--tracking-snug); }
 
@@ -407,13 +409,16 @@ bootstrapApplication(AppComponent, &#123;
       .tile-e { grid-column: span 3; }
 
       @media (max-width: 960px) {
-        .bento { grid-template-columns: repeat(2, 1fr); }
+        .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         .tile-code { grid-column: span 2; grid-row: auto; }
         .tile-b, .tile-c, .tile-d, .tile-e { grid-column: span 2; }
       }
-      @media (max-width: 560px) {
-        .bento { grid-template-columns: 1fr; }
+      @media (max-width: 720px) {
+        .bento { grid-template-columns: minmax(0, 1fr); gap: var(--sp-4); }
         .tile-code, .tile-b, .tile-c, .tile-d, .tile-e { grid-column: span 1; }
+        .tile-code { padding: var(--sp-5); }
+        .tile-code pre { padding: var(--sp-4) 0; }
+        .section-head { margin-bottom: var(--sp-8); }
       }
 
       /* ============ ADAPTERS ============ */
@@ -496,7 +501,7 @@ bootstrapApplication(AppComponent, &#123;
       .quickstart-steps { margin: 0; }
 
       @media (max-width: 860px) {
-        .quickstart-inner { grid-template-columns: 1fr; }
+        .quickstart-inner { grid-template-columns: minmax(0, 1fr); }
         .quickstart-head { position: static; }
       }
 
@@ -511,11 +516,20 @@ bootstrapApplication(AppComponent, &#123;
       }
       .cta-copy { max-width: 56ch; display: flex; flex-direction: column; gap: var(--sp-3); }
       .cta-actions { flex-shrink: 0; }
+
+      @media (max-width: 560px) {
+        .cta-actions { width: 100%; }
+        .cta-actions .btn { flex: 1 1 auto; }
+      }
     `,
   ],
 })
 export class HomeComponent {
   readonly auth = inject(AuthService);
+
+  readonly installGroups = [
+    { packages: '@amaurylapaque/angular-auth' },
+  ] as const;
 
   readonly adapters = [
     {

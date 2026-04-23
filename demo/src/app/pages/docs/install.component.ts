@@ -2,21 +2,23 @@ import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { CodeBlockComponent } from './code-block.component';
+import { PackageInstallComponent } from './package-install.component';
 
 @Component({
   selector: 'app-docs-install',
   standalone: true,
-  imports: [CodeBlockComponent, RouterLink],
+  imports: [CodeBlockComponent, PackageInstallComponent, RouterLink],
   template: `
     <h1>Install &amp; bootstrap</h1>
 
     <h2>1. Install the package</h2>
-    <app-code [code]="npmInstall" lang="bash" />
+    <app-package-install [groups]="mainPackage" />
     <p>
       Then install only the SDK(s) for the adapter(s) you actually use — all
       of them are declared as optional peer dependencies.
     </p>
-    <app-code [code]="peerSdks" lang="bash" />
+    <app-package-install [groups]="peerGroups" />
+    <p class="muted">JWT and Mock have no extra peer dependencies.</p>
 
     <h2>2. Bootstrap</h2>
     <p>The composition root always has the same shape: three providers.</p>
@@ -61,21 +63,16 @@ import { CodeBlockComponent } from './code-block.component';
   `,
 })
 export class DocsInstallComponent {
-  readonly npmInstall = 'npm install @amaurylapaque/angular-auth';
+  readonly mainPackage = [
+    { packages: '@amaurylapaque/angular-auth' },
+  ] as const;
 
-  readonly peerSdks = `# OIDC (Auth0, Keycloak, Okta, Cognito, ...)
-npm install angular-auth-oidc-client
-
-# MSAL (Azure AD / Entra ID)
-npm install @azure/msal-browser @azure/msal-angular
-
-# Firebase
-npm install firebase
-
-# Supabase
-npm install @supabase/supabase-js
-
-# JWT and Mock have no extra peer dependencies`;
+  readonly peerGroups = [
+    { note: 'OIDC (Auth0, Keycloak, Okta, Cognito, ...)', packages: 'angular-auth-oidc-client' },
+    { note: 'MSAL (Azure AD / Entra ID)', packages: '@azure/msal-browser @azure/msal-angular' },
+    { note: 'Firebase', packages: 'firebase' },
+    { note: 'Supabase', packages: '@supabase/supabase-js' },
+  ] as const;
 
   readonly bootstrap = `// main.ts
 import { bootstrapApplication } from '@angular/platform-browser';

@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 
 import { CodeBlockComponent } from '../code-block.component';
+import { PackageInstallComponent } from '../package-install.component';
 
 @Component({
   selector: 'app-docs-msal',
   standalone: true,
-  imports: [CodeBlockComponent],
+  imports: [CodeBlockComponent, PackageInstallComponent],
   template: `
     <h1>MSAL adapter</h1>
     <p class="lede">
@@ -14,7 +15,7 @@ import { CodeBlockComponent } from '../code-block.component';
     </p>
 
     <h2>Install</h2>
-    <app-code [code]="install" lang="bash" />
+    <app-package-install [groups]="installGroups" />
 
     <h2>Bootstrap</h2>
     <app-code [code]="bootstrap" />
@@ -59,7 +60,9 @@ import { CodeBlockComponent } from '../code-block.component';
   ],
 })
 export class DocsMsalComponent {
-  readonly install = 'npm install @azure/msal-browser @azure/msal-angular';
+  readonly installGroups = [
+    { packages: '@azure/msal-browser @azure/msal-angular' },
+  ] as const;
 
   readonly bootstrap = `import { provideAuth, provideMsal } from '@amaurylapaque/angular-auth';
 

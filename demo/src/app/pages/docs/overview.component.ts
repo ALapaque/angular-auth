@@ -124,8 +124,10 @@ interface AdapterLink {
       }
       .docs-intro h1 {
         margin: var(--sp-2) 0 var(--sp-1);
-        font-size: clamp(2rem, 3vw + 1rem, 3rem);
+        font-size: clamp(1.625rem, 4vw + 0.5rem, 3rem);
         letter-spacing: var(--tracking-tight);
+        overflow-wrap: anywhere;
+        hyphens: auto;
       }
       .docs-intro .lede { max-width: 60ch; }
       .docs-intro .cluster { margin-top: var(--sp-3); }
