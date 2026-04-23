@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file. The format
 is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.1](https://github.com/ALapaque/angular-auth/compare/angular-auth-v1.0.0...angular-auth-v1.0.1) (2026-04-23)
+
+
+### Bug Fixes
+
+* use canonical ALapaque casing in GitHub URLs for npm provenance ([#12](https://github.com/ALapaque/angular-auth/issues/12)) ([7fc6ac5](https://github.com/ALapaque/angular-auth/commit/7fc6ac5e18e1ff98a1658d744948ea2a8ede7562))
+
 ## [1.0.0](https://github.com/ALapaque/angular-auth/compare/angular-auth-v0.1.0...angular-auth-v1.0.0) (2026-04-23)
 
 
