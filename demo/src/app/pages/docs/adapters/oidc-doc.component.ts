@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 
 import { CodeBlockComponent } from '../code-block.component';
+import { PackageInstallComponent } from '../package-install.component';
 
 @Component({
   selector: 'app-docs-oidc',
   standalone: true,
-  imports: [CodeBlockComponent],
+  imports: [CodeBlockComponent, PackageInstallComponent],
   template: `
     <h1>OIDC adapter</h1>
     <p class="lede">
@@ -27,7 +28,7 @@ import { CodeBlockComponent } from '../code-block.component';
     </div>
 
     <h2>Install</h2>
-    <app-code [code]="install" lang="bash" />
+    <app-package-install [groups]="installGroups" />
 
     <h2>Bootstrap — the shape</h2>
     <p>
@@ -298,7 +299,9 @@ import { CodeBlockComponent } from '../code-block.component';
   ],
 })
 export class DocsOidcComponent {
-  readonly install = 'npm install @amaurylapaque/angular-auth angular-auth-oidc-client';
+  readonly installGroups = [
+    { packages: '@amaurylapaque/angular-auth angular-auth-oidc-client' },
+  ] as const;
 
   readonly bootstrap = `import { bootstrapApplication } from '@angular/platform-browser';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';

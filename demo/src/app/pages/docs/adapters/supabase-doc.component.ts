@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 
 import { CodeBlockComponent } from '../code-block.component';
+import { PackageInstallComponent } from '../package-install.component';
 
 @Component({
   selector: 'app-docs-supabase',
   standalone: true,
-  imports: [CodeBlockComponent],
+  imports: [CodeBlockComponent, PackageInstallComponent],
   template: `
     <h1>Supabase adapter</h1>
     <p class="lede">
@@ -15,7 +16,7 @@ import { CodeBlockComponent } from '../code-block.component';
     </p>
 
     <h2>Install</h2>
-    <app-code [code]="install" lang="bash" />
+    <app-package-install [groups]="installGroups" />
 
     <h2>Bootstrap</h2>
     <app-code [code]="bootstrap" />
@@ -65,7 +66,9 @@ import { CodeBlockComponent } from '../code-block.component';
   ],
 })
 export class DocsSupabaseComponent {
-  readonly install = 'npm install @supabase/supabase-js';
+  readonly installGroups = [
+    { packages: '@supabase/supabase-js' },
+  ] as const;
 
   readonly bootstrap = `import { provideAuth, provideSupabase } from '@amaurylapaque/angular-auth';
 
