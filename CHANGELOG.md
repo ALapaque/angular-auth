@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file. The format
 is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this
 project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.1](https://github.com/ALapaque/angular-auth/compare/generic-angular-auth-v0.1.0...generic-angular-auth-v0.1.1) (2026-04-23)
+
+
+### Bug Fixes
+
+* **demo:** serve SPA correctly on vercel ([#4](https://github.com/ALapaque/angular-auth/issues/4)) ([41eb8c7](https://github.com/ALapaque/angular-auth/commit/41eb8c74e36f0ecfc0d8f4fdc35f0575c0937ca2))
+
 ## [Unreleased]
 
 ### Added
