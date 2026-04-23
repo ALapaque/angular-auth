@@ -197,6 +197,8 @@ html {
   scroll-behavior: smooth;
   /* Reserve scrollbar space so short pages don't shift the nav on route change */
   scrollbar-gutter: stable;
+  /* Offset in-page anchors so the sticky nav doesn't hide the target heading */
+  scroll-padding-top: calc(var(--nav-h) + var(--sp-6));
 }
 
 body {

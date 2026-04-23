@@ -1,10 +1,22 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
+interface DocsChild {
+  readonly fragment: string;
+  readonly label: string;
+}
+
+interface DocsItem {
+  readonly path: string;
+  readonly label: string;
+  readonly exact?: boolean;
+  readonly children?: readonly DocsChild[];
+}
+
 interface DocsGroup {
   readonly kicker: string;
   readonly title: string;
-  readonly items: readonly { readonly path: string; readonly label: string; readonly exact?: boolean }[];
+  readonly items: readonly DocsItem[];
 }
 
 @Component({
@@ -28,10 +40,26 @@ interface DocsGroup {
                       [routerLink]="item.path"
                       routerLinkActive="is-active"
                       [routerLinkActiveOptions]="{ exact: !!item.exact }"
+                      #rla="routerLinkActive"
                     >
                       <span class="docs-nav-dot" aria-hidden="true"></span>
                       <span>{{ item.label }}</span>
                     </a>
+                    @if (item.children?.length && rla.isActive) {
+                      <ul class="docs-sub">
+                        @for (child of item.children!; track child.fragment) {
+                          <li>
+                            <a
+                              [routerLink]="item.path"
+                              [fragment]="child.fragment"
+                            >
+                              <span class="docs-sub-rule" aria-hidden="true"></span>
+                              <span>{{ child.label }}</span>
+                            </a>
+                          </li>
+                        }
+                      </ul>
+                    }
                   </li>
                 }
               </ul>
@@ -168,6 +196,43 @@ interface DocsGroup {
         box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent);
       }
 
+      /* ============ NESTED SUB-ITEMS ============ */
+      .docs-sub {
+        list-style: none;
+        padding: 0;
+        margin: var(--sp-1) 0 var(--sp-2);
+        border-left: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+      }
+      .docs-sub a {
+        display: flex;
+        align-items: center;
+        gap: var(--sp-2);
+        padding: var(--sp-1) var(--sp-3) var(--sp-1) var(--sp-8);
+        margin-left: 0;
+        font-size: var(--fs-xs);
+        font-family: var(--font-mono);
+        letter-spacing: 0;
+        color: var(--text-subtle);
+        border-left: none;
+        border-radius: var(--r-xs);
+        text-transform: none;
+      }
+      .docs-sub a:hover {
+        color: var(--text);
+        background: var(--surface-2);
+      }
+      .docs-sub-rule {
+        display: inline-block;
+        width: 10px;
+        height: 1px;
+        background: currentColor;
+        opacity: 0.4;
+      }
+      .docs-sub a:hover .docs-sub-rule { opacity: 0.8; }
+
       .docs-nav-github {
         display: inline-flex;
         align-items: center;
@@ -215,7 +280,16 @@ export class DocsLayoutComponent {
       kicker: '02',
       title: 'Adapters',
       items: [
-        { path: '/docs/adapters/oidc', label: 'OIDC' },
+        {
+          path: '/docs/adapters/oidc',
+          label: 'OIDC',
+          children: [
+            { fragment: 'auth0', label: 'Auth0' },
+            { fragment: 'keycloak', label: 'Keycloak' },
+            { fragment: 'okta', label: 'Okta' },
+            { fragment: 'cognito', label: 'AWS Cognito' },
+          ],
+        },
         { path: '/docs/adapters/msal', label: 'MSAL' },
         { path: '/docs/adapters/firebase', label: 'Firebase' },
         { path: '/docs/adapters/supabase', label: 'Supabase' },
