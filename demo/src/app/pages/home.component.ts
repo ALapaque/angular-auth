@@ -300,6 +300,7 @@ bootstrapApplication(AppComponent, &#123;
         font-family: var(--font-mono);
         font-size: var(--fs-sm);
         width: fit-content;
+        max-width: 100%;
       }
       .hero-install-prompt { color: var(--accent); font-weight: 600; }
       .hero-install code {
@@ -307,6 +308,15 @@ bootstrapApplication(AppComponent, &#123;
         background: transparent;
         border: none;
         color: var(--text);
+        word-break: break-all;
+      }
+
+      @media (max-width: 560px) {
+        .hero { padding-block: clamp(3rem, 8vw, 5rem) clamp(2.5rem, 6vw, 4rem); }
+        .hero-inner { gap: var(--sp-5); }
+        .hero-actions .btn { flex: 1 1 auto; }
+        .hero-install { font-size: var(--fs-xs); gap: var(--sp-2); padding: var(--sp-3); }
+        .hero-chips { gap: var(--sp-3); }
       }
 
       .hero-chips {
@@ -411,9 +421,12 @@ bootstrapApplication(AppComponent, &#123;
         .tile-code { grid-column: span 2; grid-row: auto; }
         .tile-b, .tile-c, .tile-d, .tile-e { grid-column: span 2; }
       }
-      @media (max-width: 560px) {
-        .bento { grid-template-columns: 1fr; }
+      @media (max-width: 720px) {
+        .bento { grid-template-columns: 1fr; gap: var(--sp-4); }
         .tile-code, .tile-b, .tile-c, .tile-d, .tile-e { grid-column: span 1; }
+        .tile-code { padding: var(--sp-5); }
+        .tile-code pre { padding: var(--sp-4) 0; }
+        .section-head { margin-bottom: var(--sp-8); }
       }
 
       /* ============ ADAPTERS ============ */
@@ -511,6 +524,11 @@ bootstrapApplication(AppComponent, &#123;
       }
       .cta-copy { max-width: 56ch; display: flex; flex-direction: column; gap: var(--sp-3); }
       .cta-actions { flex-shrink: 0; }
+
+      @media (max-width: 560px) {
+        .cta-actions { width: 100%; }
+        .cta-actions .btn { flex: 1 1 auto; }
+      }
     `,
   ],
 })
