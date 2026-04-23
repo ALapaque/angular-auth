@@ -61,7 +61,7 @@ import { CodeBlockComponent } from './code-block.component';
   `,
 })
 export class DocsInstallComponent {
-  readonly npmInstall = 'npm install generic-angular-auth';
+  readonly npmInstall = 'npm install @amaurylapaque/angular-auth';
 
   readonly peerSdks = `# OIDC (Auth0, Keycloak, Okta, Cognito, ...)
 npm install angular-auth-oidc-client
@@ -85,7 +85,7 @@ import {
   provideAuth,
   provideOidc,
   authInterceptor,
-} from 'generic-angular-auth';
+} from '@amaurylapaque/angular-auth';
 
 import { AppComponent } from './app/app.component';
 import { routes } from './app/app.routes';
@@ -108,7 +108,7 @@ bootstrapApplication(AppComponent, {
 });`;
 
   readonly component = `import { Component, inject } from '@angular/core';
-import { AuthService } from 'generic-angular-auth';
+import { AuthService } from '@amaurylapaque/angular-auth';
 
 @Component({
   standalone: true,
@@ -129,7 +129,7 @@ export class HeaderComponent {
 
   readonly guard = `// app.routes.ts
 import { Routes } from '@angular/router';
-import { authGuard } from 'generic-angular-auth';
+import { authGuard } from '@amaurylapaque/angular-auth';
 
 export const routes: Routes = [
   {
@@ -143,7 +143,7 @@ export const routes: Routes = [
 import {
   provideOidc, provideMsal, provideFirebase,
   provideSupabase, provideJwt, provideMock,
-} from 'generic-angular-auth';
+} from '@amaurylapaque/angular-auth';
 
 function authFeature() {
   switch (environment.auth.kind) {

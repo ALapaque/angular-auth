@@ -70,7 +70,7 @@ import { CodeBlockComponent } from '../code-block.component';
   ],
 })
 export class DocsJwtComponent {
-  readonly bootstrap = `import { provideAuth, provideJwt } from 'generic-angular-auth';
+  readonly bootstrap = `import { provideAuth, provideJwt } from '@amaurylapaque/angular-auth';
 
 provideAuth(
   provideJwt({

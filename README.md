@@ -1,8 +1,8 @@
-# generic-angular-auth
+# @amaurylapaque/angular-auth
 
-[![npm version](https://img.shields.io/npm/v/generic-angular-auth.svg)](https://www.npmjs.com/package/generic-angular-auth)
-[![npm downloads](https://img.shields.io/npm/dm/generic-angular-auth.svg)](https://www.npmjs.com/package/generic-angular-auth)
-[![license](https://img.shields.io/npm/l/generic-angular-auth.svg)](./LICENSE)
+[![npm version](https://img.shields.io/npm/v/@amaurylapaque%2Fangular-auth.svg)](https://www.npmjs.com/package/@amaurylapaque/angular-auth)
+[![npm downloads](https://img.shields.io/npm/dm/@amaurylapaque%2Fangular-auth.svg)](https://www.npmjs.com/package/@amaurylapaque/angular-auth)
+[![license](https://img.shields.io/npm/l/@amaurylapaque%2Fangular-auth.svg)](./LICENSE)
 
 Pluggable Angular authentication layer. One `AuthService` façade, one `authGuard`, one `authInterceptor` — switch the underlying provider (OIDC, MSAL, Firebase, Supabase, JWT, Mock) by changing a single line in your bootstrap.
 
@@ -23,7 +23,7 @@ Angular apps tend to couple to whichever auth SDK was picked on day one. When th
 ## Install
 
 ```bash
-npm install generic-angular-auth
+npm install @amaurylapaque/angular-auth
 
 # then install only the SDK(s) for the adapter(s) you actually use
 npm install angular-auth-oidc-client         # for OIDC (Auth0, Keycloak, Okta, Cognito, ...)
@@ -64,7 +64,7 @@ import {
   provideAuth,
   provideOidc,
   authInterceptor,
-} from 'generic-angular-auth';
+} from '@amaurylapaque/angular-auth';
 
 import { AppComponent } from './app/app.component';
 
@@ -90,7 +90,7 @@ bootstrapApplication(AppComponent, {
 ```ts
 import { Component, inject } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
-import { AuthService } from 'generic-angular-auth';
+import { AuthService } from '@amaurylapaque/angular-auth';
 
 @Component({
   standalone: true,
@@ -114,7 +114,7 @@ export class HeaderComponent {
 ```ts
 // app.routes.ts
 import { Routes } from '@angular/router';
-import { authGuard } from 'generic-angular-auth';
+import { authGuard } from '@amaurylapaque/angular-auth';
 
 export const routes: Routes = [
   { path: 'private', loadComponent: () => import('./private.component'), canActivate: [authGuard] },

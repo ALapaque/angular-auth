@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { AuthService } from 'generic-angular-auth';
+import { AuthService } from '@amaurylapaque/angular-auth';
 
 @Component({
   selector: 'app-home',
@@ -11,7 +11,7 @@ import { AuthService } from 'generic-angular-auth';
     <section class="hero dotgrid" aria-labelledby="hero-title">
       <div class="hero-glow" aria-hidden="true"></div>
       <div class="container hero-inner">
-        <span class="kicker kicker-bracket">generic-angular-auth · v0.1</span>
+        <span class="kicker kicker-bracket">&#64;amaurylapaque/angular-auth · v1.0</span>
         <h1 id="hero-title" class="hero-title">
           One auth contract.<br />
           <span class="text-gradient">Every provider.</span>
@@ -43,7 +43,7 @@ import { AuthService } from 'generic-angular-auth';
 
         <div class="hero-install" role="group" aria-label="Install command">
           <span class="hero-install-prompt" aria-hidden="true">$</span>
-          <code>npm i generic-angular-auth</code>
+          <code>npm i @amaurylapaque/angular-auth</code>
           <span class="badge badge-soft">MIT · SSR-safe</span>
         </div>
 
@@ -78,7 +78,7 @@ import { AuthService } from 'generic-angular-auth';
               <span class="badge badge-accent">1 line to swap</span>
             </header>
             <pre><code><span class="tok-kw">import</span> &#123; bootstrapApplication &#125; <span class="tok-kw">from</span> <span class="tok-str">'&#64;angular/platform-browser'</span>;
-<span class="tok-kw">import</span> &#123; provideAuth, provideOidc &#125; <span class="tok-kw">from</span> <span class="tok-str">'generic-angular-auth'</span>;
+<span class="tok-kw">import</span> &#123; provideAuth, provideOidc &#125; <span class="tok-kw">from</span> <span class="tok-str">'@amaurylapaque/angular-auth'</span>;
 
 bootstrapApplication(AppComponent, &#123;
   providers: [
@@ -196,7 +196,7 @@ bootstrapApplication(AppComponent, &#123;
         <ol class="steps quickstart-steps">
           <li>
             <h4>Install the package</h4>
-            <p>Add <code>generic-angular-auth</code>, plus the peer SDK for
+            <p>Add <code>&#64;amaurylapaque/angular-auth</code>, plus the peer SDK for
               the adapter you plan to use — e.g.
               <code>angular-auth-oidc-client</code> for OIDC.</p>
           </li>

@@ -3,9 +3,10 @@
   "packages": {
     ".": {
       "release-type": "node",
-      "package-name": "generic-angular-auth",
+      "package-name": "@amaurylapaque/angular-auth",
       "changelog-path": "CHANGELOG.md",
       "include-v-in-tag": true,
+      "release-as": "1.0.0",
       "bump-minor-pre-major": true,
       "bump-patch-for-minor-pre-major": true,
       "draft": false,

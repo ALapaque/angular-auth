@@ -64,7 +64,7 @@ export class DocsFirebaseComponent {
   readonly install = 'npm install firebase';
 
   readonly bootstrap = `import { GoogleAuthProvider } from 'firebase/auth';
-import { provideAuth, provideFirebase } from 'generic-angular-auth';
+import { provideAuth, provideFirebase } from '@amaurylapaque/angular-auth';
 
 provideAuth(
   provideFirebase({

@@ -54,7 +54,7 @@ import { CodeBlockComponent } from '../code-block.component';
   ],
 })
 export class DocsMockComponent {
-  readonly bootstrap = `import { provideAuth, provideMock } from 'generic-angular-auth';
+  readonly bootstrap = `import { provideAuth, provideMock } from '@amaurylapaque/angular-auth';
 
 provideAuth(
   provideMock({

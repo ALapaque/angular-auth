@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { AuthService } from 'generic-angular-auth';
+import { AuthService } from '@amaurylapaque/angular-auth';
 
 import { AdapterSwitcherComponent } from './adapter-switcher.component';
 import { ThemeToggleComponent } from './theme-toggle.component';
@@ -28,8 +28,8 @@ import { ThemeToggleComponent } from './theme-toggle.component';
             </svg>
           </span>
           <span class="brand-text">
-            <span class="brand-name">generic-angular-auth</span>
-            <span class="brand-tag">v0.1 · live demo</span>
+            <span class="brand-name">&#64;amaurylapaque/angular-auth</span>
+            <span class="brand-tag">v1.0 · live demo</span>
           </span>
         </a>
 
@@ -81,11 +81,11 @@ import { ThemeToggleComponent } from './theme-toggle.component';
               <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
             </svg>
           </span>
-          <span>generic-angular-auth · MIT</span>
+          <span>&#64;amaurylapaque/angular-auth · MIT</span>
         </div>
         <nav class="footer-links" aria-label="Footer">
           <a href="https://github.com/alapaque/angular-auth" target="_blank" rel="noopener noreferrer">GitHub</a>
-          <a href="https://www.npmjs.com/package/generic-angular-auth" target="_blank" rel="noopener noreferrer">npm</a>
+          <a href="https://www.npmjs.com/package/@amaurylapaque/angular-auth" target="_blank" rel="noopener noreferrer">npm</a>
           <a routerLink="/docs">Docs</a>
           <a routerLink="/docs/security">Security</a>
         </nav>

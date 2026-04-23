@@ -67,7 +67,7 @@ import { CodeBlockComponent } from '../code-block.component';
 export class DocsSupabaseComponent {
   readonly install = 'npm install @supabase/supabase-js';
 
-  readonly bootstrap = `import { provideAuth, provideSupabase } from 'generic-angular-auth';
+  readonly bootstrap = `import { provideAuth, provideSupabase } from '@amaurylapaque/angular-auth';
 
 provideAuth(
   provideSupabase({

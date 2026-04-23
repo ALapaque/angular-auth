@@ -61,7 +61,7 @@ import { CodeBlockComponent } from '../code-block.component';
 export class DocsMsalComponent {
   readonly install = 'npm install @azure/msal-browser @azure/msal-angular';
 
-  readonly bootstrap = `import { provideAuth, provideMsal } from 'generic-angular-auth';
+  readonly bootstrap = `import { provideAuth, provideMsal } from '@amaurylapaque/angular-auth';
 
 provideAuth(
   provideMsal({

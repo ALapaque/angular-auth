@@ -2,17 +2,17 @@
 
 ## Reporting a vulnerability
 
-If you discover a security issue in `generic-angular-auth`, **do not open a public
+If you discover a security issue in `@amaurylapaque/angular-auth`, **do not open a public
 GitHub issue**. Instead, send the details privately to the maintainers via the
 repository's security advisories:
 
-> https://github.com/alapaque/generic-angular-auth/security/advisories/new
+> https://github.com/alapaque/angular-auth/security/advisories/new
 
 Please include:
 
 - A clear description of the vulnerability.
 - Step-by-step reproduction, ideally with a minimal repro (code or repository).
-- The affected version (`npm ls generic-angular-auth` output is perfect).
+- The affected version (`npm ls @amaurylapaque/angular-auth` output is perfect).
 - Your assessment of impact.
 
 We aim to acknowledge reports within 3 business days and to ship a fix or a
@@ -102,7 +102,7 @@ cookies.
 ### Supply chain
 
 - This package declares every identity-provider SDK as an **optional** peer
-  dependency. Installing `generic-angular-auth` alone pulls in nothing beyond
+  dependency. Installing `@amaurylapaque/angular-auth` alone pulls in nothing beyond
   Angular and RxJS.
 - CI (`.github/workflows/ci.yml`) runs `npm audit` via npm's built-in checks
   on every push. Review dependency alerts promptly.

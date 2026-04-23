@@ -1,4 +1,4 @@
-import { AuthAdapterFeature, provideMock } from 'generic-angular-auth';
+import { AuthAdapterFeature, provideMock } from '@amaurylapaque/angular-auth';
 
 export interface AdapterOption {
   readonly key: string;
