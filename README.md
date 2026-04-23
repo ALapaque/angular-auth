@@ -6,6 +6,8 @@
 
 Pluggable Angular authentication layer. One `AuthService` façade, one `authGuard`, one `authInterceptor` — switch the underlying provider (OIDC, MSAL, Firebase, Supabase, JWT, Mock) by changing a single line in your bootstrap.
 
+**Live demo:** https://angular-auth-demo.vercel.app/ — try the live adapter switcher and browse the in-app docs.
+
 **Documentation:**
 - [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md) — design, DI model, invariants, trade-offs
 - [`docs/ADAPTERS.md`](./docs/ADAPTERS.md) — per-adapter implementation notes
