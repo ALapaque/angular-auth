@@ -332,7 +332,7 @@ interface DocsGroup {
       /* ============ MOBILE LAYOUT (<= 900px) ============ */
       @media (max-width: 900px) {
         .docs-shell {
-          grid-template-columns: 1fr;
+          grid-template-columns: minmax(0, 1fr);
           gap: var(--sp-5);
           padding-top: clamp(var(--sp-5), 4vw, var(--sp-8));
         }

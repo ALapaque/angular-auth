@@ -510,7 +510,7 @@ bootstrapApplication(AppComponent, &#123;
       .quickstart-steps { margin: 0; }
 
       @media (max-width: 860px) {
-        .quickstart-inner { grid-template-columns: 1fr; }
+        .quickstart-inner { grid-template-columns: minmax(0, 1fr); }
         .quickstart-head { position: static; }
       }
 

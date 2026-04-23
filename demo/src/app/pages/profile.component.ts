@@ -153,15 +153,15 @@ import { getSelectedAdapter } from '../adapter-selection';
       /* ============ BENTO ============ */
       .profile-bento {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: var(--sp-5);
       }
-      .tile-identity { grid-column: span 2; display: flex; flex-direction: column; gap: var(--sp-6); }
-      .tile-status   { grid-column: span 1; display: flex; flex-direction: column; gap: var(--sp-4); }
-      .tile-claims   { grid-column: span 3; }
+      .tile-identity { grid-column: span 2; display: flex; flex-direction: column; gap: var(--sp-6); min-width: 0; }
+      .tile-status   { grid-column: span 1; display: flex; flex-direction: column; gap: var(--sp-4); min-width: 0; }
+      .tile-claims   { grid-column: span 3; min-width: 0; }
 
       @media (max-width: 900px) {
-        .profile-bento { grid-template-columns: 1fr; }
+        .profile-bento { grid-template-columns: minmax(0, 1fr); }
         .tile-identity, .tile-status, .tile-claims { grid-column: span 1; }
       }
 
