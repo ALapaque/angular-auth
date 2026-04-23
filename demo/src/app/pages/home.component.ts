@@ -2,10 +2,12 @@ import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '@amaurylapaque/angular-auth';
 
+import { PackageInstallComponent } from './docs/package-install.component';
+
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, PackageInstallComponent],
   template: `
     <!-- ============ HERO ============ -->
     <section class="hero dotgrid" aria-labelledby="hero-title">
@@ -41,9 +43,8 @@ import { AuthService } from '@amaurylapaque/angular-auth';
           <a class="btn" routerLink="/docs">Read the docs</a>
         </div>
 
-        <div class="hero-install" role="group" aria-label="Install command">
-          <span class="hero-install-prompt" aria-hidden="true">$</span>
-          <code>npm i @amaurylapaque/angular-auth</code>
+        <div class="hero-install">
+          <app-package-install [groups]="installGroups" />
           <span class="badge badge-soft">MIT · SSR-safe</span>
         </div>
 
@@ -289,33 +290,23 @@ bootstrapApplication(AppComponent, &#123;
       .hero-actions { margin-top: var(--sp-4); }
 
       .hero-install {
-        display: inline-flex;
-        align-items: center;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
         gap: var(--sp-3);
-        flex-wrap: wrap;
-        padding: var(--sp-3) var(--sp-4);
-        background: var(--surface);
-        border: var(--border-w-strong) solid var(--border);
-        border-radius: var(--r-md);
-        font-family: var(--font-mono);
-        font-size: var(--fs-sm);
-        width: fit-content;
-        max-width: 100%;
+        width: 100%;
+        max-width: 560px;
       }
-      .hero-install-prompt { color: var(--accent); font-weight: 600; }
-      .hero-install code {
-        padding: 0;
-        background: transparent;
-        border: none;
-        color: var(--text);
-        word-break: break-all;
+      .hero-install app-package-install {
+        display: block;
+        width: 100%;
+        margin: 0;
       }
 
       @media (max-width: 560px) {
         .hero { padding-block: clamp(3rem, 8vw, 5rem) clamp(2.5rem, 6vw, 4rem); }
         .hero-inner { gap: var(--sp-5); }
         .hero-actions .btn { flex: 1 1 auto; }
-        .hero-install { font-size: var(--fs-xs); gap: var(--sp-2); padding: var(--sp-3); }
         .hero-chips { gap: var(--sp-3); }
       }
 
@@ -535,6 +526,10 @@ bootstrapApplication(AppComponent, &#123;
 })
 export class HomeComponent {
   readonly auth = inject(AuthService);
+
+  readonly installGroups = [
+    { packages: '@amaurylapaque/angular-auth' },
+  ] as const;
 
   readonly adapters = [
     {
