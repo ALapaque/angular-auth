@@ -242,6 +242,25 @@ export function provideMyAdapter(config: MyConfig): AuthAdapterFeature {
 }
 ```
 
+## Running the demo
+
+A minimal standalone Angular app lives under `demo/`. It boots with the **Mock** adapter so it runs offline with no credentials — switching providers is a single line in `demo/src/app/app.config.ts`.
+
+```bash
+npm install
+npm run demo         # ng serve demo → http://localhost:4200
+npm run demo:build   # production build into dist/demo
+```
+
+## Running the test suite
+
+```bash
+npm test             # Vitest + @analogjs/vitest-angular, jsdom
+npm run test:watch
+```
+
+Current coverage: `MockAuthAdapter`, `JwtAuthAdapter` (login / refresh / expiry / storage / custom response mapping), `AuthService` façade, `authInterceptor` (matching rules).
+
 ## What's out of scope (for now)
 
 - SAML / CAS — protocol support belongs in a separate adapter
