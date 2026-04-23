@@ -2,6 +2,12 @@
 
 Pluggable Angular authentication layer. One `AuthService` façade, one `authGuard`, one `authInterceptor` — switch the underlying provider (OIDC, MSAL, Firebase, Supabase, JWT, Mock) by changing a single line in your bootstrap.
 
+**Documentation:**
+- [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md) — design, DI model, invariants, trade-offs
+- [`docs/ADAPTERS.md`](./docs/ADAPTERS.md) — per-adapter implementation notes
+- [`docs/CONTRIBUTING.md`](./docs/CONTRIBUTING.md) — local dev, writing a new adapter, tests, release
+- In-app docs site — `npm run demo` then open `/docs` for integration guides with copy-pasteable snippets
+
 ## Why
 
 Angular apps tend to couple to whichever auth SDK was picked on day one. When the team wants to migrate from, say, Keycloak to Auth0, or support both during a transition, every component that reads `user$` or `getAccessToken()` needs to change. This package puts a thin, stable contract in front of the SDK so the rest of the app never has to know.

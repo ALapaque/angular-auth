@@ -16,6 +16,7 @@ import { AdapterSwitcherComponent } from './adapter-switcher.component';
     <nav>
       <a routerLink="/">Home</a>
       <a routerLink="/profile">Profile (protected)</a>
+      <a routerLink="/docs">Docs</a>
     </nav>
 
     <div class="card">
