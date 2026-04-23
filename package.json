@@ -1,0 +1,107 @@
+{
+  "name": "generic-angular-auth",
+  "version": "0.1.0",
+  "description": "Pluggable Angular authentication layer with adapters for OIDC, MSAL, Firebase, Supabase, JWT and Mock providers.",
+  "license": "MIT",
+  "private": false,
+  "sideEffects": false,
+  "homepage": "https://github.com/alapaque/generic-angular-auth#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alapaque/generic-angular-auth.git"
+  },
+  "bugs": {
+    "url": "https://github.com/alapaque/generic-angular-auth/issues"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "files": [
+    "fesm*/**",
+    "index.d.ts",
+    "public-api.d.ts",
+    "lib/**",
+    "package.json",
+    "README.md",
+    "LICENSE",
+    "SECURITY.md",
+    "CHANGELOG.md"
+  ],
+  "keywords": [
+    "angular",
+    "auth",
+    "authentication",
+    "oidc",
+    "msal",
+    "firebase",
+    "supabase",
+    "jwt",
+    "keycloak",
+    "auth0"
+  ],
+  "scripts": {
+    "build": "ng-packagr -p ng-package.json -c tsconfig.lib.json",
+    "typecheck": "tsc --noEmit -p tsconfig.lib.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "demo": "ng serve demo",
+    "demo:build": "ng build demo",
+    "prepublishOnly": "npm run typecheck && npm test && npm run build"
+  },
+  "peerDependencies": {
+    "@angular/common": ">=17.0.0",
+    "@angular/core": ">=17.0.0",
+    "@azure/msal-angular": ">=5.0.0",
+    "@azure/msal-browser": ">=5.0.0",
+    "@supabase/supabase-js": ">=2.0.0",
+    "angular-auth-oidc-client": ">=17.0.0",
+    "firebase": ">=10.0.0",
+    "rxjs": ">=7.0.0"
+  },
+  "peerDependenciesMeta": {
+    "angular-auth-oidc-client": {
+      "optional": true
+    },
+    "@azure/msal-angular": {
+      "optional": true
+    },
+    "@azure/msal-browser": {
+      "optional": true
+    },
+    "@supabase/supabase-js": {
+      "optional": true
+    },
+    "firebase": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@analogjs/vitest-angular": "^2.4.10",
+    "@angular/build": "^21.2.8",
+    "@angular/cli": "^21.2.8",
+    "@angular/common": "^21.0.0",
+    "@angular/compiler": "^21.0.0",
+    "@angular/compiler-cli": "^21.0.0",
+    "@angular/core": "^21.0.0",
+    "@angular/platform-browser": "^21.0.0",
+    "@angular/platform-browser-dynamic": "^21.2.10",
+    "@angular/router": "^21.0.0",
+    "@azure/msal-angular": "^5.0.0",
+    "@azure/msal-browser": "^5.0.0",
+    "@supabase/supabase-js": "^2.104.0",
+    "@types/node": "^25.6.0",
+    "angular-auth-oidc-client": "^21.0.0",
+    "firebase": "^11.0.0",
+    "jsdom": "^25.0.1",
+    "ng-packagr": "^21.0.0",
+    "rxjs": "^7.8.0",
+    "tslib": "^2.8.0",
+    "typescript": "~5.9.0",
+    "vitest": "^4.1.5",
+    "zone.js": "^0.15.0"
+  }
+}
