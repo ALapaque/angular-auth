@@ -8,7 +8,7 @@ import { CodeBlockComponent } from './code-block.component';
   standalone: true,
   imports: [CodeBlockComponent, RouterLink],
   template: `
-    <h1>generic-angular-auth</h1>
+    <h1>Overview</h1>
     <p class="lede">
       One Angular service, one guard, one interceptor — swap the auth provider
       (OIDC, MSAL, Firebase, Supabase, JWT, Mock) by changing a single line at
@@ -26,23 +26,25 @@ import { CodeBlockComponent } from './code-block.component';
     </p>
 
     <h2>At a glance</h2>
-    <table class="adapters">
-      <thead>
-        <tr>
-          <th>Adapter</th>
-          <th>Covers</th>
-          <th>Peer SDK</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td><a routerLink="/docs/adapters/oidc">OIDC</a></td><td>Auth0, Keycloak, Okta, Cognito, Zitadel, Authentik, Google…</td><td><code>angular-auth-oidc-client</code></td></tr>
-        <tr><td><a routerLink="/docs/adapters/msal">MSAL</a></td><td>Azure AD / Entra ID</td><td><code>&#64;azure/msal-angular</code></td></tr>
-        <tr><td><a routerLink="/docs/adapters/firebase">Firebase</a></td><td>Firebase Authentication</td><td><code>firebase</code></td></tr>
-        <tr><td><a routerLink="/docs/adapters/supabase">Supabase</a></td><td>Supabase Auth (password / OTP / OAuth)</td><td><code>&#64;supabase/supabase-js</code></td></tr>
-        <tr><td><a routerLink="/docs/adapters/jwt">JWT</a></td><td>Your own backend</td><td>— (HttpClient only)</td></tr>
-        <tr><td><a routerLink="/docs/adapters/mock">Mock</a></td><td>Dev & tests</td><td>— (in-memory)</td></tr>
-      </tbody>
-    </table>
+    <div class="surface-muted adapters-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Adapter</th>
+            <th>Covers</th>
+            <th>Peer SDK</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><a routerLink="/docs/adapters/oidc">OIDC</a></td><td>Auth0, Keycloak, Okta, Cognito, Zitadel, Authentik, Google…</td><td><code>angular-auth-oidc-client</code></td></tr>
+          <tr><td><a routerLink="/docs/adapters/msal">MSAL</a></td><td>Azure AD / Entra ID</td><td><code>&#64;azure/msal-angular</code></td></tr>
+          <tr><td><a routerLink="/docs/adapters/firebase">Firebase</a></td><td>Firebase Authentication</td><td><code>firebase</code></td></tr>
+          <tr><td><a routerLink="/docs/adapters/supabase">Supabase</a></td><td>Supabase Auth (password / OTP / OAuth)</td><td><code>&#64;supabase/supabase-js</code></td></tr>
+          <tr><td><a routerLink="/docs/adapters/jwt">JWT</a></td><td>Your own backend</td><td>— (HttpClient only)</td></tr>
+          <tr><td><a routerLink="/docs/adapters/mock">Mock</a></td><td>Dev &amp; tests</td><td>— (in-memory)</td></tr>
+        </tbody>
+      </table>
+    </div>
 
     <h2>30-second tour</h2>
     <app-code [code]="bootstrapSample" />
@@ -54,19 +56,11 @@ import { CodeBlockComponent } from './code-block.component';
   `,
   styles: [
     `
-      .lede { font-size: 1.1rem; opacity: 0.85; }
-      table.adapters {
-        width: 100%;
-        border-collapse: collapse;
-        margin: 1rem 0;
-        font-size: 0.9rem;
+      .adapters-table {
+        padding: 0;
+        overflow: hidden;
       }
-      .adapters th, .adapters td {
-        text-align: left;
-        padding: 0.4rem 0.6rem;
-        border-bottom: 1px solid color-mix(in srgb, currentColor 15%, transparent);
-      }
-      .adapters th { font-weight: 600; opacity: 0.75; }
+      .adapters-table table { font-size: var(--fs-sm); }
     `,
   ],
 })

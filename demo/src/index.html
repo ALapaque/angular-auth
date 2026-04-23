@@ -2,9 +2,37 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>generic-angular-auth demo</title>
+    <title>generic-angular-auth — demo</title>
+    <meta
+      name="description"
+      content="Live demo of generic-angular-auth: one AuthService, one guard, one interceptor — swap between OIDC, MSAL, Firebase, Supabase, JWT and Mock."
+    />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0a0a0f" media="(prefers-color-scheme: dark)" />
     <base href="/" />
+
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%236366f1'/%3E%3Cpath d='M16 8a5 5 0 0 0-5 5v3h-1.5A1.5 1.5 0 0 0 8 17.5v6A1.5 1.5 0 0 0 9.5 25h13a1.5 1.5 0 0 0 1.5-1.5v-6a1.5 1.5 0 0 0-1.5-1.5H21v-3a5 5 0 0 0-5-5Zm-3 8v-3a3 3 0 1 1 6 0v3h-6Z' fill='white'/%3E%3C/svg%3E" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    />
+
+    <script>
+      // Apply theme synchronously to avoid FOUC.
+      (function () {
+        try {
+          var stored = localStorage.getItem('theme');
+          if (stored === 'light' || stored === 'dark') {
+            document.documentElement.setAttribute('data-theme', stored);
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <app-root></app-root>
