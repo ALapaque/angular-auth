@@ -1,5 +1,9 @@
 # generic-angular-auth
 
+[![npm version](https://img.shields.io/npm/v/generic-angular-auth.svg)](https://www.npmjs.com/package/generic-angular-auth)
+[![npm downloads](https://img.shields.io/npm/dm/generic-angular-auth.svg)](https://www.npmjs.com/package/generic-angular-auth)
+[![license](https://img.shields.io/npm/l/generic-angular-auth.svg)](./LICENSE)
+
 Pluggable Angular authentication layer. One `AuthService` façade, one `authGuard`, one `authInterceptor` — switch the underlying provider (OIDC, MSAL, Firebase, Supabase, JWT, Mock) by changing a single line in your bootstrap.
 
 **Documentation:**
