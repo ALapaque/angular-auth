@@ -10,22 +10,30 @@ import {
   selector: 'app-adapter-switcher',
   standalone: true,
   template: `
-    <label>
-      Active adapter
-      <select [value]="current()" (change)="switch($any($event.target).value)">
+    <label class="switcher">
+      <span class="kicker kicker-bracket">Adapter</span>
+      <select
+        class="select"
+        [value]="current()"
+        (change)="switch($any($event.target).value)"
+      >
         @for (option of options; track option.key) {
           <option [value]="option.key">{{ option.label }}</option>
         }
       </select>
     </label>
-    <p class="hint">{{ currentOption().note }}</p>
   `,
   styles: [
     `
-      :host { display: block; margin-bottom: 1rem; }
-      label { display: flex; gap: 0.5rem; align-items: center; }
-      select { padding: 0.25rem 0.5rem; }
-      .hint { margin: 0.25rem 0 0; font-size: 0.85rem; opacity: 0.7; }
+      :host { display: inline-flex; }
+      .switcher {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--sp-3);
+      }
+      @media (max-width: 720px) {
+        .switcher .kicker { display: none; }
+      }
     `,
   ],
 })
@@ -39,7 +47,6 @@ export class AdapterSwitcherComponent {
   switch(key: string): void {
     if (key === this.current()) return;
     setSelectedAdapterKey(key);
-    // Reload to rebuild DI with the newly selected AuthProvider.
     location.reload();
   }
 }

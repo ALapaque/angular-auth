@@ -1,6 +1,10 @@
 import { ApplicationConfig, provideZonelessChangeDetection } from '@angular/core';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { provideRouter } from '@angular/router';
+import {
+  provideRouter,
+  withInMemoryScrolling,
+  withViewTransitions,
+} from '@angular/router';
 import { authInterceptor, provideAuth } from 'generic-angular-auth';
 
 import { getSelectedAdapter } from './adapter-selection';
@@ -14,7 +18,14 @@ const selected = getSelectedAdapter();
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZonelessChangeDetection(),
-    provideRouter(routes),
+    provideRouter(
+      routes,
+      withViewTransitions({ skipInitialTransition: true }),
+      withInMemoryScrolling({
+        scrollPositionRestoration: 'top',
+        anchorScrolling: 'enabled',
+      }),
+    ),
     provideHttpClient(withInterceptors([authInterceptor])),
     provideAuth(selected.build(), {
       protectedResourceUrls: ['https://api.example.com'],
