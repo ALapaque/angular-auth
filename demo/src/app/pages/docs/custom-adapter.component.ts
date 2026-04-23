@@ -78,7 +78,7 @@ import {
   LoginOptions,
   LogoutOptions,
   TokenOptions,
-} from 'generic-angular-auth';
+} from '@amaurylapaque/angular-auth';
 
 import { MY_ADAPTER_CONFIG } from './my-adapter-config';
 
@@ -124,7 +124,7 @@ export class MyAuthAdapter implements AuthProvider {
 import {
   AUTH_PROVIDER,
   AuthAdapterFeature,
-} from 'generic-angular-auth';
+} from '@amaurylapaque/angular-auth';
 
 import { MY_ADAPTER_CONFIG, MyAdapterConfig } from './my-adapter-config';
 import { MyAuthAdapter } from './my.adapter';

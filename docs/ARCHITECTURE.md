@@ -1,12 +1,12 @@
 # Architecture
 
-`generic-angular-auth` is an abstraction + a family of adapters. This document explains the design, the invariants every adapter must honour, and the trade-offs that shape the public surface.
+`@amaurylapaque/angular-auth` is an abstraction + a family of adapters. This document explains the design, the invariants every adapter must honour, and the trade-offs that shape the public surface.
 
 ## 1. Design goals
 
 1. **Stable surface for the application.** Components, guards and interceptors depend on one service (`AuthService`) and one DI token (`AUTH_PROVIDER`). Swapping the underlying auth SDK never requires touching feature code.
 2. **Thin adapters.** Each adapter does only two jobs: (a) bootstrap and own its SDK, (b) translate SDK-specific state and calls into the unified `AuthProvider` contract. No business logic, no cross-provider shims.
-3. **Pay only for what you use.** Every SDK peer dependency is declared as `optional`. Installing `generic-angular-auth` alone pulls in nothing beyond Angular and RxJS.
+3. **Pay only for what you use.** Every SDK peer dependency is declared as `optional`. Installing `@amaurylapaque/angular-auth` alone pulls in nothing beyond Angular and RxJS.
 4. **Escape hatch by default.** `AuthUser.raw` preserves the original claims object so callers can reach provider-specific data without forking the adapter.
 
 ## 2. Module graph

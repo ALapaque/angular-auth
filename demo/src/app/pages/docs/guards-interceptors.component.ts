@@ -57,7 +57,7 @@ import { CodeBlockComponent } from './code-block.component';
 export class DocsGuardsInterceptorsComponent {
   readonly guard = `// app.routes.ts
 import { Routes } from '@angular/router';
-import { authGuard } from 'generic-angular-auth';
+import { authGuard } from '@amaurylapaque/angular-auth';
 
 export const routes: Routes = [
   {
@@ -69,7 +69,7 @@ export const routes: Routes = [
 
   readonly roleGuard = `import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { AuthService } from 'generic-angular-auth';
+import { AuthService } from '@amaurylapaque/angular-auth';
 
 export function hasRole(role: string): CanActivateFn {
   return () => {
@@ -85,7 +85,7 @@ export function hasRole(role: string): CanActivateFn {
 
   readonly interceptor = `// main.ts
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { authInterceptor, provideAuth } from 'generic-angular-auth';
+import { authInterceptor, provideAuth } from '@amaurylapaque/angular-auth';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -105,7 +105,7 @@ bootstrapApplication(AppComponent, {
   readonly customInterceptor = `import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { from, switchMap } from 'rxjs';
-import { AuthService } from 'generic-angular-auth';
+import { AuthService } from '@amaurylapaque/angular-auth';
 
 export const audienceAwareInterceptor: HttpInterceptorFn = (req, next) => {
   const auth = inject(AuthService);

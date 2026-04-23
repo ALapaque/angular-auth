@@ -35,7 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: npm
-      url: https://www.npmjs.com/package/generic-angular-auth
+      url: https://www.npmjs.com/package/@amaurylapaque/angular-auth
     permissions:
       contents: read
       id-token: write

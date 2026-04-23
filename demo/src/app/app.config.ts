@@ -5,7 +5,7 @@ import {
   withInMemoryScrolling,
   withViewTransitions,
 } from '@angular/router';
-import { authInterceptor, provideAuth } from 'generic-angular-auth';
+import { authInterceptor, provideAuth } from '@amaurylapaque/angular-auth';
 
 import { getSelectedAdapter } from './adapter-selection';
 import { routes } from './app.routes';

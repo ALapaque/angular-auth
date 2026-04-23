@@ -25,7 +25,7 @@ interface AdapterLink {
   template: `
     <header class="docs-intro">
       <span class="kicker kicker-bracket">Documentation</span>
-      <h1>generic-angular-auth</h1>
+      <h1>&#64;amaurylapaque/angular-auth</h1>
       <p class="lede">
         One <code>AuthService</code>, one guard, one interceptor. Swap the
         auth provider — OIDC, MSAL, Firebase, Supabase, JWT, Mock — by
@@ -286,7 +286,7 @@ export class DocsOverviewComponent {
 
   readonly bootstrapSample = `import { bootstrapApplication } from '@angular/platform-browser';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { provideAuth, provideOidc, authInterceptor } from 'generic-angular-auth';
+import { provideAuth, provideOidc, authInterceptor } from '@amaurylapaque/angular-auth';
 
 bootstrapApplication(AppComponent, {
   providers: [

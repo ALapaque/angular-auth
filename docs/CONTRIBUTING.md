@@ -6,7 +6,7 @@ Thanks for considering a contribution. This guide covers local development, how 
 
 ```bash
 git clone <repo>
-cd generic-angular-auth
+cd angular-auth
 npm install
 ```
 

@@ -1,17 +1,17 @@
 {
-  "name": "generic-angular-auth",
+  "name": "@amaurylapaque/angular-auth",
   "version": "0.1.0",
   "description": "Pluggable Angular authentication layer with adapters for OIDC, MSAL, Firebase, Supabase, JWT and Mock providers.",
   "license": "MIT",
   "private": false,
   "sideEffects": false,
-  "homepage": "https://github.com/alapaque/generic-angular-auth#readme",
+  "homepage": "https://github.com/alapaque/angular-auth#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/alapaque/generic-angular-auth.git"
+    "url": "git+https://github.com/alapaque/angular-auth.git"
   },
   "bugs": {
-    "url": "https://github.com/alapaque/generic-angular-auth/issues"
+    "url": "https://github.com/alapaque/angular-auth/issues"
   },
   "engines": {
     "node": ">=20.0.0"

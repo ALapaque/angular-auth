@@ -21,7 +21,7 @@ import { CodeBlockComponent } from '../code-block.component';
           exposes.</p>
         <p class="muted" style="margin-top: var(--sp-2);">
           Peer dep: <code>angular-auth-oidc-client</code> — installed
-          alongside <code>generic-angular-auth</code>.
+          alongside <code>&#64;amaurylapaque/angular-auth</code>.
         </p>
       </div>
     </div>
@@ -298,11 +298,11 @@ import { CodeBlockComponent } from '../code-block.component';
   ],
 })
 export class DocsOidcComponent {
-  readonly install = 'npm install generic-angular-auth angular-auth-oidc-client';
+  readonly install = 'npm install @amaurylapaque/angular-auth angular-auth-oidc-client';
 
   readonly bootstrap = `import { bootstrapApplication } from '@angular/platform-browser';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { provideAuth, provideOidc, authInterceptor } from 'generic-angular-auth';
+import { provideAuth, provideOidc, authInterceptor } from '@amaurylapaque/angular-auth';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -319,7 +319,7 @@ bootstrapApplication(AppComponent, {
   ],
 });`;
 
-  readonly auth0Sample = `import { provideAuth, provideOidc } from 'generic-angular-auth';
+  readonly auth0Sample = `import { provideAuth, provideOidc } from '@amaurylapaque/angular-auth';
 
 provideAuth(
   provideOidc({
@@ -344,7 +344,7 @@ provideAuth(
   },
 });`;
 
-  readonly keycloakSample = `import { provideAuth, provideOidc } from 'generic-angular-auth';
+  readonly keycloakSample = `import { provideAuth, provideOidc } from '@amaurylapaque/angular-auth';
 
 provideAuth(
   provideOidc({

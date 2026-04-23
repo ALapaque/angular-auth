@@ -98,7 +98,7 @@ import { CodeBlockComponent } from './code-block.component';
     <h2>5. Dependency hygiene</h2>
     <p>
       Every identity-provider SDK is declared as an <strong>optional</strong>
-      peer dependency. Installing <code>generic-angular-auth</code> alone
+      peer dependency. Installing <code>&#64;amaurylapaque/angular-auth</code> alone
       pulls in nothing beyond Angular and RxJS, minimising your supply-chain
       surface.
     </p>
@@ -113,10 +113,10 @@ import { CodeBlockComponent } from './code-block.component';
       Do not open a public GitHub issue. Use the repository's security
       advisory:
     </p>
-    <app-code code="https://github.com/alapaque/generic-angular-auth/security/advisories/new" lang="url" />
+    <app-code code="https://github.com/alapaque/angular-auth/security/advisories/new" lang="url" />
     <p>
       Full policy in
-      <a href="https://github.com/alapaque/generic-angular-auth/blob/main/SECURITY.md">SECURITY.md</a>.
+      <a href="https://github.com/alapaque/angular-auth/blob/main/SECURITY.md">SECURITY.md</a>.
     </p>
 
     <p>

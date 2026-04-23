@@ -9,7 +9,7 @@ import { CodeBlockComponent } from './code-block.component';
   template: `
     <h1>API reference</h1>
     <p class="lede">
-      Public types and helpers exported from <code>generic-angular-auth</code>.
+      Public types and helpers exported from <code>&#64;amaurylapaque/angular-auth</code>.
     </p>
 
     <h2><code>AuthService</code></h2>
