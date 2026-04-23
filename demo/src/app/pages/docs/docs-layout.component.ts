@@ -26,6 +26,7 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
         <h3>Advanced</h3>
         <ul>
           <li><a routerLink="/docs/custom" routerLinkActive="active">Writing your own adapter</a></li>
+          <li><a routerLink="/docs/security" routerLinkActive="active">Security</a></li>
           <li><a routerLink="/docs/api" routerLinkActive="active">API reference</a></li>
         </ul>
       </aside>

@@ -114,11 +114,13 @@ export class JwtAuthAdapter implements AuthProvider {
   private readStorage(): JwtTokens | null {
     const store = this.getStore();
     if (!store) return null;
-    const raw = store.getItem(this.storageKey());
-    if (!raw) return null;
     try {
+      const raw = store.getItem(this.storageKey());
+      if (!raw) return null;
       return JSON.parse(raw) as JwtTokens;
     } catch {
+      // Storage may be disabled (private mode, iframe sandbox, quota),
+      // and stored content may be corrupted. In both cases treat as empty.
       return null;
     }
   }
@@ -127,10 +129,17 @@ export class JwtAuthAdapter implements AuthProvider {
     const store = this.getStore();
     if (!store) return;
     const key = this.storageKey();
-    if (!tokens) {
-      store.removeItem(key);
-    } else {
-      store.setItem(key, JSON.stringify(tokens));
+    try {
+      if (!tokens) {
+        store.removeItem(key);
+      } else {
+        store.setItem(key, JSON.stringify(tokens));
+      }
+    } catch {
+      // Quota exceeded or storage disabled — silently give up rather than
+      // crashing the auth flow. Consumers opting in to 'local'/'session'
+      // storage accept this trade-off; use `storage: 'memory'` to make
+      // persistence failure explicit.
     }
   }
 
@@ -140,8 +149,15 @@ export class JwtAuthAdapter implements AuthProvider {
 
   private getStore(): Storage | null {
     if (this.config.storage === 'memory') return null;
+    // Server-side rendering, web workers, or any environment where the DOM
+    // globals are not available yet.
     if (typeof window === 'undefined') return null;
-    return this.config.storage === 'session' ? window.sessionStorage : window.localStorage;
+    try {
+      return this.config.storage === 'session' ? window.sessionStorage : window.localStorage;
+    } catch {
+      // Some browsers throw when accessing storage with strict privacy settings.
+      return null;
+    }
   }
 }
 

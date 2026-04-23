@@ -49,6 +49,13 @@ export const routes: Routes = [
           import('./pages/docs/api.component').then((m) => m.DocsApiComponent),
       },
       {
+        path: 'security',
+        loadComponent: () =>
+          import('./pages/docs/security.component').then(
+            (m) => m.DocsSecurityComponent,
+          ),
+      },
+      {
         path: 'adapters/oidc',
         loadComponent: () =>
           import('./pages/docs/adapters/oidc-doc.component').then((m) => m.DocsOidcComponent),

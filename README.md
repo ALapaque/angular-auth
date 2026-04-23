@@ -6,6 +6,8 @@ Pluggable Angular authentication layer. One `AuthService` façade, one `authGuar
 - [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md) — design, DI model, invariants, trade-offs
 - [`docs/ADAPTERS.md`](./docs/ADAPTERS.md) — per-adapter implementation notes
 - [`docs/CONTRIBUTING.md`](./docs/CONTRIBUTING.md) — local dev, writing a new adapter, tests, release
+- [`SECURITY.md`](./SECURITY.md) — vulnerability disclosure and token-storage guidance
+- [`CHANGELOG.md`](./CHANGELOG.md)
 - In-app docs site — `npm run demo` then open `/docs` for integration guides with copy-pasteable snippets
 
 ## Why
@@ -284,6 +286,16 @@ npm run test:watch
 ```
 
 Current coverage (42 specs): every adapter has its own spec with the upstream SDK mocked via `vi.mock` — `MockAuthAdapter`, `JwtAuthAdapter` (login / refresh / expiry / storage / custom response mapping), `OidcAuthAdapter` (Keycloak + Cognito claim shapes), `MsalAuthAdapter` (event subjects, redirect vs popup, silent token), `FirebaseAuthAdapter` (auth state, strategies, id token), `SupabaseAuthAdapter` (session hydration, `onAuthStateChange`, password / OAuth / OTP strategies, refresh). Plus `AuthService` façade and `authInterceptor` matching rules.
+
+## Security
+
+> Full details in [`SECURITY.md`](./SECURITY.md). Quick summary for integrators:
+
+- **Never use `protectedResourceUrls: ['*']` in production.** It leaks your users' tokens to every domain you call — including third-party APIs, CDNs and analytics. Always list your own API origins explicitly.
+- **`localStorage` is readable by any script on your origin.** A single XSS vulnerability exfiltrates every stored token. The JWT adapter defaults to `local` for DX; switch to `storage: 'session'` (per-tab) or `storage: 'memory'` (no persistence) for high-sensitivity apps, or move auth to HttpOnly server cookies.
+- **Register redirect URIs strictly at your identity provider.** Never accept open redirects.
+- **Review `npm audit` output** before every release. CI runs it automatically via `.github/workflows/ci.yml`.
+- **Report vulnerabilities privately** via the GitHub security advisory link in `SECURITY.md` — never in a public issue.
 
 ## What's out of scope (for now)
 

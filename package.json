@@ -5,6 +5,32 @@
   "license": "MIT",
   "private": false,
   "sideEffects": false,
+  "homepage": "https://github.com/alapaque/generic-angular-auth#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alapaque/generic-angular-auth.git"
+  },
+  "bugs": {
+    "url": "https://github.com/alapaque/generic-angular-auth/issues"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "files": [
+    "fesm*/**",
+    "index.d.ts",
+    "public-api.d.ts",
+    "lib/**",
+    "package.json",
+    "README.md",
+    "LICENSE",
+    "SECURITY.md",
+    "CHANGELOG.md"
+  ],
   "keywords": [
     "angular",
     "auth",
@@ -23,7 +49,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "demo": "ng serve demo",
-    "demo:build": "ng build demo"
+    "demo:build": "ng build demo",
+    "prepublishOnly": "npm run typecheck && npm test && npm run build"
   },
   "peerDependencies": {
     "@angular/common": ">=17.0.0",
