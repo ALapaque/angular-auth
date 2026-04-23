@@ -357,13 +357,14 @@ bootstrapApplication(AppComponent, &#123;
       /* ============ BENTO ============ */
       .bento {
         display: grid;
-        grid-template-columns: repeat(6, 1fr);
+        grid-template-columns: repeat(6, minmax(0, 1fr));
         gap: var(--sp-5);
       }
       .bento-tile {
         display: flex;
         flex-direction: column;
         gap: var(--sp-3);
+        min-width: 0;
       }
       .bento-tile h3 { letter-spacing: var(--tracking-snug); }
 
@@ -417,12 +418,12 @@ bootstrapApplication(AppComponent, &#123;
       .tile-e { grid-column: span 3; }
 
       @media (max-width: 960px) {
-        .bento { grid-template-columns: repeat(2, 1fr); }
+        .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         .tile-code { grid-column: span 2; grid-row: auto; }
         .tile-b, .tile-c, .tile-d, .tile-e { grid-column: span 2; }
       }
       @media (max-width: 720px) {
-        .bento { grid-template-columns: 1fr; gap: var(--sp-4); }
+        .bento { grid-template-columns: minmax(0, 1fr); gap: var(--sp-4); }
         .tile-code, .tile-b, .tile-c, .tile-d, .tile-e { grid-column: span 1; }
         .tile-code { padding: var(--sp-5); }
         .tile-code pre { padding: var(--sp-4) 0; }
