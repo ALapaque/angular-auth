@@ -1,6 +1,6 @@
 # generic-angular-auth
 
-Pluggable Angular authentication layer. One `AuthService` façade, one `authGuard`, one `authInterceptor` — switch the underlying provider (OIDC, MSAL, Firebase, JWT, Mock) by changing a single line in your bootstrap.
+Pluggable Angular authentication layer. One `AuthService` façade, one `authGuard`, one `authInterceptor` — switch the underlying provider (OIDC, MSAL, Firebase, Supabase, JWT, Mock) by changing a single line in your bootstrap.
 
 ## Why
 
@@ -15,6 +15,7 @@ npm install generic-angular-auth
 npm install angular-auth-oidc-client         # for OIDC (Auth0, Keycloak, Okta, Cognito, ...)
 npm install @azure/msal-browser @azure/msal-angular   # for MSAL
 npm install firebase                         # for Firebase
+npm install @supabase/supabase-js            # for Supabase
 # JWT and Mock adapters have no extra peer deps
 ```
 
@@ -30,9 +31,9 @@ npm install firebase                         # for Firebase
             ┌──────────────┐
             │ AuthProvider │  interface
             └──────┬───────┘
-      ┌───────┬────┴─────┬─────────┬────────┐
-      ▼       ▼          ▼         ▼        ▼
-    OIDC    MSAL     Firebase    JWT      Mock
+      ┌───────┬────┴─────┬──────────┬─────────┬────────┐
+      ▼       ▼          ▼          ▼         ▼        ▼
+    OIDC    MSAL     Firebase   Supabase    JWT      Mock
 ```
 
 Components only ever touch `AuthService`. Swapping the provider is a single-file change in the app bootstrap.
@@ -158,7 +159,23 @@ provideAuth(
 
 Email-password, custom token and anonymous login are all supported — pick a strategy at config time or pass it per call via `login({ extra: { strategy: {...} } })`.
 
-### 4. JWT — custom backend
+### 4. Supabase
+
+```ts
+provideAuth(
+  provideSupabase({
+    url: 'https://xyz.supabase.co',
+    anonKey: '...',
+    defaultStrategy: { type: 'password', email: 'a@b.c', password: 'secret' },
+    // or { type: 'oauth', provider: 'github' }
+    // or { type: 'otp', email: 'a@b.c' }  (magic link)
+  }),
+);
+```
+
+The adapter wraps `@supabase/supabase-js` — OAuth providers (github, google, discord…), password, OTP and session refresh all go through the unified `AuthService`.
+
+### 5. JWT — custom backend
 
 ```ts
 provideAuth(
@@ -176,7 +193,7 @@ auth.login({ extra: { email: 'foo@bar.com', password: 'secret' } });
 
 `mapLoginResponse` and `mapUser` let you adapt any backend shape without changing the call sites.
 
-### 5. Mock — dev & tests
+### 6. Mock — dev & tests
 
 ```ts
 provideAuth(
@@ -202,6 +219,7 @@ function authFeature() {
     case 'oidc':     return provideOidc(environment.auth.config);
     case 'msal':     return provideMsal(environment.auth.config);
     case 'firebase': return provideFirebase(environment.auth.config);
+    case 'supabase': return provideSupabase(environment.auth.config);
     case 'jwt':      return provideJwt(environment.auth.config);
     case 'mock':     return provideMock(environment.auth.config);
   }
@@ -244,7 +262,7 @@ export function provideMyAdapter(config: MyConfig): AuthAdapterFeature {
 
 ## Running the demo
 
-A minimal standalone Angular app lives under `demo/`. It boots with the **Mock** adapter so it runs offline with no credentials — switching providers is a single line in `demo/src/app/app.config.ts`.
+A minimal standalone Angular app lives under `demo/`. It boots with the **Mock** adapter so it runs offline with no credentials — switching providers is a single line in `demo/src/app/app.config.ts`. The demo also ships with a live **adapter switcher** in the UI (backed by localStorage + reload) showing how different Mock configurations behave with the exact same components.
 
 ```bash
 npm install
@@ -259,7 +277,7 @@ npm test             # Vitest + @analogjs/vitest-angular, jsdom
 npm run test:watch
 ```
 
-Current coverage: `MockAuthAdapter`, `JwtAuthAdapter` (login / refresh / expiry / storage / custom response mapping), `AuthService` façade, `authInterceptor` (matching rules).
+Current coverage (42 specs): every adapter has its own spec with the upstream SDK mocked via `vi.mock` — `MockAuthAdapter`, `JwtAuthAdapter` (login / refresh / expiry / storage / custom response mapping), `OidcAuthAdapter` (Keycloak + Cognito claim shapes), `MsalAuthAdapter` (event subjects, redirect vs popup, silent token), `FirebaseAuthAdapter` (auth state, strategies, id token), `SupabaseAuthAdapter` (session hydration, `onAuthStateChange`, password / OAuth / OTP strategies, refresh). Plus `AuthService` façade and `authInterceptor` matching rules.
 
 ## What's out of scope (for now)
 

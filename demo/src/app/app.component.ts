@@ -2,12 +2,17 @@ import { Component, inject } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { AuthService } from 'generic-angular-auth';
 
+import { AdapterSwitcherComponent } from './adapter-switcher.component';
+
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterLink, RouterOutlet],
+  imports: [RouterLink, RouterOutlet, AdapterSwitcherComponent],
   template: `
     <h1>generic-angular-auth — demo</h1>
+
+    <app-adapter-switcher />
+
     <nav>
       <a routerLink="/">Home</a>
       <a routerLink="/profile">Profile (protected)</a>
