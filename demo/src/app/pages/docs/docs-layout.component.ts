@@ -1,71 +1,236 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
+interface DocsGroup {
+  readonly kicker: string;
+  readonly title: string;
+  readonly items: readonly { readonly path: string; readonly label: string; readonly exact?: boolean }[];
+}
+
 @Component({
   selector: 'app-docs-layout',
   standalone: true,
   imports: [RouterLink, RouterLinkActive, RouterOutlet],
   template: `
-    <div class="docs">
-      <aside>
-        <h3>Getting started</h3>
-        <ul>
-          <li><a routerLink="/docs" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Overview</a></li>
-          <li><a routerLink="/docs/install" routerLinkActive="active">Install & bootstrap</a></li>
-          <li><a routerLink="/docs/guards-interceptors" routerLinkActive="active">Guards & interceptors</a></li>
-        </ul>
-        <h3>Adapters</h3>
-        <ul>
-          <li><a routerLink="/docs/adapters/oidc" routerLinkActive="active">OIDC</a></li>
-          <li><a routerLink="/docs/adapters/msal" routerLinkActive="active">MSAL</a></li>
-          <li><a routerLink="/docs/adapters/firebase" routerLinkActive="active">Firebase</a></li>
-          <li><a routerLink="/docs/adapters/supabase" routerLinkActive="active">Supabase</a></li>
-          <li><a routerLink="/docs/adapters/jwt" routerLinkActive="active">JWT (custom backend)</a></li>
-          <li><a routerLink="/docs/adapters/mock" routerLinkActive="active">Mock</a></li>
-        </ul>
-        <h3>Advanced</h3>
-        <ul>
-          <li><a routerLink="/docs/custom" routerLinkActive="active">Writing your own adapter</a></li>
-          <li><a routerLink="/docs/security" routerLinkActive="active">Security</a></li>
-          <li><a routerLink="/docs/api" routerLinkActive="active">API reference</a></li>
-        </ul>
+    <div class="container docs-shell">
+      <aside class="docs-nav" aria-label="Documentation">
+        <div class="docs-nav-inner">
+          @for (group of groups; track group.title) {
+            <section class="docs-group">
+              <header class="docs-group-head">
+                <span class="kicker">{{ group.kicker }}</span>
+                <h3>{{ group.title }}</h3>
+              </header>
+              <ul>
+                @for (item of group.items; track item.path) {
+                  <li>
+                    <a
+                      [routerLink]="item.path"
+                      routerLinkActive="is-active"
+                      [routerLinkActiveOptions]="{ exact: !!item.exact }"
+                    >
+                      <span class="docs-nav-dot" aria-hidden="true"></span>
+                      <span>{{ item.label }}</span>
+                    </a>
+                  </li>
+                }
+              </ul>
+            </section>
+          }
+
+          <a
+            class="docs-nav-github"
+            href="https://github.com/alapaque/angular-auth"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
+              <path d="M9 18c-4.51 2-5-2-7-2"/>
+            </svg>
+            <span>View source on GitHub</span>
+          </a>
+        </div>
       </aside>
-      <main>
-        <router-outlet />
+
+      <main class="docs-content">
+        <article class="prose">
+          <router-outlet />
+        </article>
       </main>
     </div>
   `,
   styles: [
     `
-      .docs {
+      :host { display: block; }
+
+      .docs-shell {
         display: grid;
-        grid-template-columns: 220px 1fr;
-        gap: 2rem;
-        margin-top: 1rem;
+        grid-template-columns: 260px minmax(0, 1fr);
+        gap: clamp(var(--sp-8), 4vw, var(--sp-16));
+        padding-top: clamp(var(--sp-10), 6vw, var(--sp-16));
+        padding-bottom: clamp(var(--sp-10), 6vw, var(--sp-16));
+        align-items: start;
       }
-      @media (max-width: 720px) {
-        .docs { grid-template-columns: 1fr; }
+
+      @media (max-width: 900px) {
+        .docs-shell {
+          grid-template-columns: 1fr;
+          gap: var(--sp-8);
+        }
       }
-      aside h3 {
-        font-size: 0.75rem;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        opacity: 0.6;
-        margin: 1rem 0 0.4rem;
+
+      /* ============ SIDEBAR ============ */
+      .docs-nav {
+        position: sticky;
+        top: calc(var(--nav-h) + var(--sp-5));
+        max-height: calc(100vh - var(--nav-h) - var(--sp-10));
+        overflow-y: auto;
+        padding-right: var(--sp-2);
       }
-      aside ul {
+      @media (max-width: 900px) {
+        .docs-nav {
+          position: static;
+          max-height: none;
+          overflow: visible;
+        }
+      }
+
+      .docs-nav-inner {
+        display: flex;
+        flex-direction: column;
+        gap: var(--sp-8);
+      }
+
+      .docs-group { display: flex; flex-direction: column; gap: var(--sp-3); }
+      .docs-group-head { display: flex; flex-direction: column; gap: var(--sp-1); }
+      .docs-group-head h3 {
+        font-family: var(--font-display);
+        font-size: var(--fs-sm);
+        font-weight: 600;
+        letter-spacing: var(--tracking-snug);
+        color: var(--text);
+        margin: 0;
+      }
+
+      .docs-group ul {
         list-style: none;
         padding: 0;
         margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: var(--sp-1);
+        border-left: var(--border-w) solid var(--border);
       }
-      aside li { padding: 0.15rem 0; }
-      aside a { text-decoration: none; }
-      aside a.active {
-        font-weight: 600;
-        text-decoration: underline;
+      .docs-group a {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: var(--sp-2);
+        padding: var(--sp-2) var(--sp-3);
+        margin-left: -1px; /* overlap the border so active bar is flush */
+        font-size: var(--fs-sm);
+        color: var(--text-muted);
+        text-decoration: none;
+        border-left: 2px solid transparent;
+        border-radius: 0 var(--r-xs) var(--r-xs) 0;
+        transition:
+          color var(--dur-fast) var(--ease-out),
+          background var(--dur-fast) var(--ease-out),
+          border-color var(--dur-fast) var(--ease-out);
       }
-      main :first-child { margin-top: 0; }
+      .docs-group a:hover {
+        color: var(--text);
+        background: var(--surface-2);
+        text-decoration: none;
+      }
+      .docs-group a:focus-visible {
+        outline: none;
+        background: var(--surface-2);
+        box-shadow: 0 0 0 2px var(--accent);
+        border-radius: var(--r-xs);
+      }
+      .docs-group a.is-active {
+        color: var(--text);
+        font-weight: 500;
+        background: color-mix(in srgb, var(--accent) 10%, transparent);
+        border-left-color: var(--accent);
+      }
+      .docs-nav-dot {
+        width: 4px; height: 4px;
+        border-radius: 50%;
+        background: currentColor;
+        opacity: 0.5;
+      }
+      .docs-group a.is-active .docs-nav-dot {
+        opacity: 1;
+        background: var(--accent);
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent);
+      }
+
+      .docs-nav-github {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--sp-2);
+        padding: var(--sp-3) var(--sp-4);
+        font-family: var(--font-mono);
+        font-size: var(--fs-xs);
+        text-transform: uppercase;
+        letter-spacing: var(--tracking-wide);
+        color: var(--text-muted);
+        background: var(--surface);
+        border: var(--border-w-strong) solid var(--border);
+        border-radius: var(--r-sm);
+        text-decoration: none;
+        transition:
+          color var(--dur-fast) var(--ease-out),
+          border-color var(--dur-fast) var(--ease-out),
+          background var(--dur-fast) var(--ease-out);
+      }
+      .docs-nav-github:hover {
+        color: var(--text);
+        border-color: var(--border-strong);
+        text-decoration: none;
+      }
+
+      /* ============ CONTENT ============ */
+      .docs-content { min-width: 0; }
+      .docs-content .prose { max-width: none; }
+      .docs-content .prose > :first-child { margin-top: 0; }
     `,
   ],
 })
-export class DocsLayoutComponent {}
+export class DocsLayoutComponent {
+  readonly groups: readonly DocsGroup[] = [
+    {
+      kicker: '01',
+      title: 'Getting started',
+      items: [
+        { path: '/docs', label: 'Overview', exact: true },
+        { path: '/docs/install', label: 'Install & bootstrap' },
+        { path: '/docs/guards-interceptors', label: 'Guards & interceptors' },
+      ],
+    },
+    {
+      kicker: '02',
+      title: 'Adapters',
+      items: [
+        { path: '/docs/adapters/oidc', label: 'OIDC' },
+        { path: '/docs/adapters/msal', label: 'MSAL' },
+        { path: '/docs/adapters/firebase', label: 'Firebase' },
+        { path: '/docs/adapters/supabase', label: 'Supabase' },
+        { path: '/docs/adapters/jwt', label: 'JWT (custom backend)' },
+        { path: '/docs/adapters/mock', label: 'Mock' },
+      ],
+    },
+    {
+      kicker: '03',
+      title: 'Advanced',
+      items: [
+        { path: '/docs/custom', label: 'Writing your own adapter' },
+        { path: '/docs/security', label: 'Security' },
+        { path: '/docs/api', label: 'API reference' },
+      ],
+    },
+  ];
+}
