@@ -233,7 +233,7 @@ bootstrapApplication(AppComponent, &#123;
             <a class="btn btn-accent" routerLink="/docs">Read the docs</a>
             <a
               class="btn"
-              href="https://github.com/alapaque/angular-auth"
+              href="https://github.com/ALapaque/angular-auth"
               target="_blank"
               rel="noopener noreferrer"
             >

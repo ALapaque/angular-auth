@@ -6,7 +6,7 @@ If you discover a security issue in `@amaurylapaque/angular-auth`, **do not open
 GitHub issue**. Instead, send the details privately to the maintainers via the
 repository's security advisories:
 
-> https://github.com/alapaque/angular-auth/security/advisories/new
+> https://github.com/ALapaque/angular-auth/security/advisories/new
 
 Please include:
 

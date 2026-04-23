@@ -5,13 +5,13 @@
   "license": "MIT",
   "private": false,
   "sideEffects": false,
-  "homepage": "https://github.com/alapaque/angular-auth#readme",
+  "homepage": "https://github.com/ALapaque/angular-auth#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/alapaque/angular-auth.git"
+    "url": "git+https://github.com/ALapaque/angular-auth.git"
   },
   "bugs": {
-    "url": "https://github.com/alapaque/angular-auth/issues"
+    "url": "https://github.com/ALapaque/angular-auth/issues"
   },
   "engines": {
     "node": ">=20.0.0"
